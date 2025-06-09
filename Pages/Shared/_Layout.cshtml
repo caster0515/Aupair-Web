@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Au Pair Services</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AuPairServices.styles.css" asp-append-version="true" />
+
+    <style>
+        :root {
+            --page-bg: #2563eb;
+            --color-gray-600: #6b7280;
+            --color-gray-100: #f3f4f6;
+            --input-bg: #ffffff;
+            --input-border: #d1d5db;
+            --input-focus-border: #2563eb;
+            --input-radius: 0.75rem;
+            --transition-duration: 0.3s;
+        }
+
+        html, body {
+            background-color: var(--color-gray-100);
+            color: var(--color-gray-600);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;   
+        }
+
+        .containerReg {
+            max-width: 1024px;
+            margin: 2rem auto 4rem auto;
+            background: #ffffff;
+            padding: 2rem 2.5rem;
+            border-radius: var(--input-radius);
+            box-shadow: 0 4px 12px rgb(0 0 0 / 0.05);
+            
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+            
+        }
+
+        h1.display-4 {
+            font-weight: 700;
+            font-size: 3rem;
+            color: #111827;
+            margin-bottom: 0.5rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        form {
+            margin-bottom: 2rem; /* Adjust as needed */
+        }
+
+        form label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            color: #111827;
+            font-size: 1rem;
+        }
+
+        main {
+            flex: 1; 
+        }
+
+        footer {
+            margin-top: 2rem; 
+            padding: 1rem;
+            background-color: #f1f1f1; 
+            text-align: center; 
+            padding: 2px; 
+        }
+
+        /* Salmon pink background for navbar */
+        .salmon-pink-nav {
+            background-color: #FEECEC;  /* #FA8072; /* salmon pink */
+            /*#FA86C4 Taffy as supernanny*/
+        }
+        /* Text color for links and brand */
+        .salmon-pink-nav a.nav-link,
+        .salmon-pink-nav .navbar-brand,
+        .salmon-pink-nav .dropdown-toggle {
+            color: black;
+            font-weight: 500;
+        }
+        /* Link hover color */
+        .salmon-pink-nav a.nav-link:hover,
+        .salmon-pink-nav .dropdown-toggle:hover {
+            color: darksalmon; /* lighter salmon shade */
+        }
+        /* Navbar toggler icon color - override default for contrast */
+        .salmon-pink-nav .navbar-toggler-icon {
+            filter: brightness(0) invert(1);
+        }
+        /* Dropdown menu background and text color */
+        .salmon-pink-nav .dropdown-menu {
+            background-color: #FA8072; /* salmon pink */
+            border: none;
+        }
+
+        .salmon-pink-nav .dropdown-item {
+            color: black;
+        }
+
+        .salmon-pink-nav .dropdown-item:hover,
+        .salmon-pink-nav .dropdown-item:focus {
+            background-color: #fbd5d2; /* lighter salmon shade */
+            color: #6b2922;
+        }
+
+        /* Pastel pink background for navbar */
+        .pastel-pink-nav {
+            background-color: #FFD1DC; /* pastel pink */
+        }
+
+        /* Optional: pastel pink text color */
+        .pastel-pink-nav a.nav-link,
+        .pastel-pink-nav .navbar-brand {
+            color: #a94456;
+        }
+
+        /* Change link color on hover */
+        .pastel-pink-nav a.nav-link:hover {
+            color: #d66a7e;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg salmon-pink-nav">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-page="/Index">
+                    <img src="~/LogoMain.png" alt="Logo" />
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="mnuFamiliesDrop" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                FAMILIES
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="mnuFamiliesDrop">
+                                <li><a class="dropdown-item" href="/Families/FamPrerequisitesReq">Prerequisites / Requirements</a></li>
+                                <li><a class="dropdown-item" href="/Families/FamProcedure">Procedure</a></li>
+                                <li><a class="dropdown-item" href="/Families/FamRegister">Family Registration</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="mnuAuPAirsDrop" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                AU PAIRS
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="servicesDrmnuAuPAirsDropopdown">
+                                <li><a class="dropdown-item" href="/AuPairs/AuPairPrerequisite">Prerequisites and Requirements</a></li>
+                                <li><a class="dropdown-item" href="/AuPairs/AuPairProcedure">Procedure</a></li>
+                                <li><a class="dropdown-item" href="/AuPairs/OurAuPairs">Our Au Pairs</a></li>
+                                <li><a class="dropdown-item" href="/AuPairs/AuPairRegister">Au Pairs Registration</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Contact">Contact</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/About">About</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2025 - Au Pair Services - <a asp-area="" asp-page="/About">About</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
