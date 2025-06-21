@@ -1,0 +1,469 @@
+﻿
+@page
+@model AuPairServices.Pages.AuPairs.AuPairRegisterModel
+@{
+	ViewData["Title"] = "Au Pair Registration Form";
+}
+
+@Html.AntiForgeryToken()
+
+<style>
+
+    p.lead {
+        font-size: 1.125rem;
+        color: var(--color-gray-600);
+        margin-bottom: 2rem;
+        line-height: 1.6;
+    }
+
+    form input[type="text"],
+    form input[type="email"],
+    form input[type="file"] {
+        width: 100%;
+        padding: 0.6rem 1rem;
+        border: 1.5px solid var(--input-border);
+        border-radius: var(--input-radius);
+        font-size: 1rem;
+        background-color: var(--input-bg);
+        transition: border-color var(--transition-duration);
+        outline-offset: 2px;
+    }
+
+    form input[type="text"]:focus,
+    form input[type="email"]:focus,
+    form input[type="file"]:focus {
+        border-color: var(--input-focus-border);
+        outline: none;
+        box-shadow: 0 0 8px rgb(37 99 235 / 0.3);
+    }
+
+    .validation-message {
+        color: #dc2626; /* red-600 */
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
+
+    form button[type="submit"] {
+        margin-top: 1.5rem;
+        padding: 0.75rem 1.5rem;
+        background-color: #2563eb;
+        color: white;
+        font-weight: 600;
+        font-size: 1.125rem;
+        border: none;
+        border-radius: var(--input-radius);
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    form button[type="submit"]:hover,
+    form button[type="submit"]:focus {
+        background-color: #1d4ed8;
+        outline: none;
+    }
+
+    .text-center {
+        text-align: center;
+        margin: 2rem 0 1rem;
+    }
+
+    .dropzone {
+        border: 2px dashed #3b82f6;
+        border-radius: 0.5rem;
+        transition: all 0.3s ease;
+    }
+
+        .dropzone.active {
+            border-color: #10b981;
+            background-color: rgba(16, 185, 129, 0.05);
+        }
+
+    .progress-bar {
+        transition: width 0.3s ease;
+    }
+
+    .file-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+<div class="text-center">
+    <h1 class="display-4">@ViewData["Title"]</h1>
+    <p>
+        Please input the following:
+    </p>
+</div>
+
+<div class="containerReg" role="main">
+    <form method="post" enctype="multipart/form-data" >
+        <div class="max-w-md mx-auto rounded-lg shadow-sm p-6 mb-6">
+            <div class="form-group mb-4">
+                @Html.LabelFor(m => m.FamilyName, "Family Name", new { @class = "block text-gray-900 font-semibold text-lg mb-2" })
+                @Html.TextBoxFor(m => m.FamilyName, new {
+                    @type = "text",
+                    @required = "required",
+                    @autocomplete = "family-name",
+                    @placeholder = "Enter your Family Name",
+                    @class = "w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+                })
+                <span class="validation-message text-sm text-red-600 mt-1 block" asp-validation-for="FamilyName"></span>
+            </div>
+
+            <div class="form-group mb-4">
+                @Html.LabelFor(m => m.Email, "Email Address", new { @class = "block text-gray-900 font-semibold text-lg mb-2" })
+                @Html.TextBoxFor(m => m.Email, new {
+                    @type = "text",
+                    @required = "required",
+                    @autocomplete = "email-address",
+                    @placeholder = "Enter your Email Address",
+                    @class = "w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+                })
+                <span class="validation-message text-sm text-red-600 mt-1 block" asp-validation-for="Email"></span>
+            </div>
+
+            <div class="form-group mb-4">
+                <label for="photo1">Upload Photo 1</label>
+                <input type="file" id="photo1" name="Photo1" accept="image/*" required />
+                <span class="validation-message text-sm text-red-600 mt-1 block" asp-validation-for="Photo1"></span>
+                <label>Preferably smiling and/or with children</label>
+            </div>
+
+            <div class="form-group mb-4">
+                <label for="photo2">Upload Photo 2</label>
+                <input type="file" id="photo2" name="Photo2" accept="image/*" required />
+                <span class="validation-message text-sm text-red-600 mt-1 block" asp-validation-for="Photo2"></span>
+                <label>Preferably smiling and/or with children</label>
+            </div>
+
+            <div class="form-group mb-4">
+                <label for="photo3">Upload Photo 3</label>
+                <input type="file" id="photo3" name="Photo3" accept="image/*" required />
+                <span class="validation-message text-sm text-red-600 mt-1 block" asp-validation-for="Photo3"></span>
+                <label>Preferably smiling and/or with children</label>
+            </div>
+            
+            <div class="form-group mb-4">
+                <!-- Header -->
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-bold text-blue-600 mb-6">Upload Your Video</h2>
+                    <p class="text-gray-600">Upload your videos with a maximum size of 20MB</p>
+                </div>
+
+                <!-- Upload Section -->
+                <div class="rounded-xl shadow-lg p-6 mb-8">
+                    <div id="dropzone" class="dropzone p-12 text-center cursor-pointer">
+                        <div class="flex flex-col items-center justify-center space-y-4">
+                            <i class="fas fa-cloud-upload-alt text-5xl text-blue-500"></i>
+                            <h2 class="text-xl font-semibold text-gray-800">Drag & Drop your video here</h2>
+                            <p class="text-gray-500">or click to browse files</p>
+                            <input type="file" id="fileInput" class="hidden" accept="video/*">
+                            <button id="browseBtn" class="bg-blue-600 hover:bg-black-700 text-gray-500 font-medium py-2 px-6 rounded-lg transition duration-300">
+                                Select Video
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- File Info -->
+                    <div id="fileInfo" class="hidden mt-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center space-x-3">
+                                <i class="fas fa-file-video text-blue-500 text-xl"></i>
+                                <span id="fileName" class="font-medium text-gray-800 truncate max-w-xs"></span>
+                            </div>
+                            <span id="fileSize" class="text-gray-500 text-sm"></span>
+                        </div>
+
+                        <!-- Progress Bar -->
+                        <div class="w-full bg-gray-200 rounded-full h-2.5 mb-4">
+                            <div id="progressBar" class="progress-bar bg-blue-600 h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
+
+                        <div class="flex justify-between items-center">
+                            <span id="progressText" class="text-sm text-gray-600">0%</span>
+                            <div class="flex space-x-2">
+                                <button id="cancelBtn" class="text-gray-500 hover:text-gray-700 transition">
+                                    <i class="fas fa-times"></i> Cancel
+                                </button>
+                                <button id="uploadBtn" class="bg-blue-600 hover:bg-blue-700 text-gray-500 font-medium py-1.5 px-4 rounded-lg transition duration-300">
+                                    <i class="fas fa-upload mr-1"></i> Upload
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Error Message -->
+                    <div id="errorMessage" class="hidden mt-4 p-3 bg-red-50 text-red-600 rounded-lg text-sm"></div>
+                </div>
+
+                <!-- Uploaded Videos Section -->
+                <div class="floral-bg rounded-xl shadow-lg p-8">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Your Uploaded Videos</h2>
+
+                    <div id="emptyState" class="text-center py-12">
+                        <i class="fas fa-video-slash text-4xl text-gray-300 mb-4"></i>
+                        <p class="text-gray-500">No videos uploaded yet</p>
+                    </div>
+
+                    <div id="videoList" class="grid gap-4 hidden">
+                        <!-- Videos will be listed here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.Message))
+        {
+            <div class="alert alert-info">@Model.Message</div>
+        }
+
+        <button type="submit" aria-label="Submit Family Registration Form">Submit</button>
+    </form>
+</div>
+
+<script>
+    // DOM Elements
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('fileInput');
+    const browseBtn = document.getElementById('browseBtn');
+    const fileInfo = document.getElementById('fileInfo');
+    const fileName = document.getElementById('fileName');
+    const fileSize = document.getElementById('fileSize');
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    const uploadBtn = document.getElementById('uploadBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const errorMessage = document.getElementById('errorMessage');
+    const videoList = document.getElementById('videoList');
+    const emptyState = document.getElementById('emptyState');
+
+    // Variables
+    let selectedFile = null;
+    const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB in bytes
+
+    // Event Listeners
+    browseBtn.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', handleFileSelect);
+    dropzone.addEventListener('dragover', handleDragOver);
+    dropzone.addEventListener('dragleave', handleDragLeave);
+    dropzone.addEventListener('drop', handleDrop);
+    uploadBtn.addEventListener('click', startUpload);
+    cancelBtn.addEventListener('click', resetUpload);
+    cancelBtn.addEventListener('click', resetUpload);
+    videoList.addEventListener('click', function(e) {
+    if (e.target.closest('.delete-btn')) {
+        const videoCard = e.target.closest('.file-card');
+        const fileName = videoCard.dataset.filename;
+        if (confirm('Are you sure you want to delete this video?')) {
+            deleteVideo(fileName, videoCard);
+        }
+    }
+    });
+
+    // Functions
+    function handleFileSelect(e) {
+        const file = e.target.files[0];
+        processSelectedFile(file);
+    }
+
+    function handleDragOver(e) {
+        e.preventDefault();
+        dropzone.classList.add('active');
+    }
+
+    function handleDragLeave() {
+        dropzone.classList.remove('active');
+    }
+
+    function handleDrop(e) {
+        e.preventDefault();
+        dropzone.classList.remove('active');
+        const file = e.dataTransfer.files[0];
+        processSelectedFile(file);
+    }
+
+    function processSelectedFile(file) {
+        // Reset any previous errors
+        errorMessage.classList.add('hidden');
+
+        // Validate file
+        if (!file) return;
+
+        if (!file.type.startsWith('video/')) {
+            showError('Please select a video file');
+            return;
+        }
+
+        if (file.size > MAX_FILE_SIZE) {
+            showError('File size exceeds 20MB limit');
+            return;
+        }
+
+        // Update UI with file info
+        selectedFile = file;
+        fileName.textContent = file.name;
+        fileSize.textContent = formatFileSize(file.size);
+
+        // Show file info section
+        fileInfo.classList.remove('hidden');
+    }
+
+    function startUpload() {
+        if (!selectedFile) return;
+
+        // Simulate upload progress (in a real app, this would be an AJAX call)
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += Math.random() * 10;
+            if (progress >= 100) {
+                progress = 100;
+                clearInterval(interval);
+                uploadComplete();
+            }
+
+            updateProgress(progress);
+        }, 300);
+
+        // Disable buttons during upload
+        uploadBtn.disabled = true;
+        cancelBtn.disabled = true;
+
+        // Store interval for cancellation
+        uploadBtn.dataset.interval = interval;
+    }
+
+    function updateProgress(progress) {
+        progressBar.style.width = `${progress}%`;
+        progressText.textContent = `${Math.round(progress)}%`;
+    }
+
+    function uploadComplete() {
+        // Add the uploaded video to the list
+        addVideoToList(selectedFile);
+
+        // Reset the upload UI
+        resetUpload();
+
+        // Show success message (temporary)
+        const successMsg = document.createElement('div');
+        successMsg.className = 'fixed top-4 right-4 bg-green-100 text-green-800 px-4 py-2 rounded-lg shadow-lg';
+        successMsg.innerHTML = '<i class="fas fa-check-circle mr-2"></i> Video uploaded successfully!';
+        document.body.appendChild(successMsg);
+
+        setTimeout(() => {
+            successMsg.remove();
+        }, 3000);
+    }
+
+    function resetUpload() {
+        // Clear any ongoing upload
+        if (uploadBtn.dataset.interval) {
+            clearInterval(parseInt(uploadBtn.dataset.interval));
+            delete uploadBtn.dataset.interval;
+        }
+
+        // Reset UI
+        fileInput.value = '';
+        selectedFile = null;
+        fileInfo.classList.add('hidden');
+        progressBar.style.width = '0%';
+        progressText.textContent = '0%';
+        uploadBtn.disabled = false;
+        cancelBtn.disabled = false;
+    }
+
+    function showError(message) {
+        errorMessage.textContent = message;
+        errorMessage.classList.remove('hidden');
+    }
+
+    function formatFileSize(bytes) {
+        if (bytes < 1024) return bytes + ' bytes';
+        else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+        else return (bytes / 1048576).toFixed(1) + ' MB';
+    }
+
+    function addVideoToList(file) {
+        // Hide empty state if it's the first video
+        if (emptyState.classList.contains('hidden') === false) {
+            emptyState.classList.add('hidden');
+            videoList.classList.remove('hidden');
+        }
+
+        // Create video card
+        const videoCard = document.createElement('div');
+        videoCard.className = 'file-card bg-white border border-gray-200 rounded-lg p-4 transition duration-300';
+        videoCard.innerHTML = `
+            <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 bg-blue-50 p-3 rounded-lg">
+                    <i class="fas fa-file-video text-blue-500 text-xl"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-gray-900 truncate">${file.name}</p>
+                    <p class="text-sm text-gray-500">${formatFileSize(file.size)}</p>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button class="text-blue-600 hover:text-blue-800 p-1 rounded-full">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <button class="text-gray-500 hover:text-gray-700 p-1 rounded-full">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+
+        // Add event listener for delete button
+        videoCard.querySelector('.delete-btn').addEventListener('click', function() {
+            const fileName = videoCard.dataset.filename;
+            if (confirm('Are you sure you want to delete this video?')) {
+                deleteVideo(fileName, videoCard);
+            }
+        });
+
+        // Add to the beginning of the list
+        videoList.prepend(videoCard);
+    }
+
+        async function deleteVideo(fileName, element) {
+        try {
+            const response = await fetch('/VideoUpload?handler=DeleteVideo', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                },
+                body: JSON.stringify({ fileName })
+            });
+
+            if (response.ok) {
+                element.remove(); // Remove the video card from the UI
+                showNotification('Video deleted successfully!', 'success');
+
+                // Show empty state if no videos remain
+                if (document.querySelectorAll('.file-card').length === 0) {
+                    emptyState.classList.remove('hidden');
+                    videoList.classList.add('hidden');
+                }
+            } else {
+                const error = await response.text();
+                throw new Error(error);
+            }
+        } catch (error) {
+            showNotification('Failed to delete video: ' + error.message, 'error');
+        }
+    }
+
+    function showNotification(message, type) {
+        const notification = document.createElement('div');
+        notification.className = `fixed top-4 right-4 p-4 rounded-lg shadow-lg ${
+            type === 'success' ? 'bg-green-500' : 'bg-red-500'
+        } text-white`;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.remove();
+        }, 3000);
+    }
+</script>
